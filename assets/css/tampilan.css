@@ -135,5 +135,7 @@ input[name='keterangan']{
 .logout a:hover{
   color: #dbc592;
   text-decoration: none;
-
+}
+.modal{
+  top: 30%;
 }

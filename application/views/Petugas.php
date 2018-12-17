@@ -50,20 +50,20 @@
   </nav>
   <!-- ======================================================================================================================-->
  
-  <!-- Membuat menu publikasi BPBD ==========================================================================================-->
+  <!-- Membuat menu publikasi kebutuhan ==========================================================================================-->
   <div class="container-fluid p-0">
     <section class="resume-section" id="kebutuhan">
       <div class="my-auto">
         <h3 class="mb-0"><span class="text-primary">LAPORKAN KEBUTUHAN LOGISTIK</span></h3>
         <hr> 
         <p class="mb-3">Laporkan data kebutuhan lokasi bencana</p>
-            <form action="" id="">
+            <form action="<?php echo site_url('Petugas/insertKebutuhan') ?>" method="POST">
               <table>
                 <tr><td><input class="form-control" type="text" name="lokasi" placeholder="Lokasi"></td></tr>
                 <tr><td><input class="form-control" type="text" name="kebutuhan" placeholder="Barang"></td></tr>
                 <tr><td><input class="form-control" type="text" name="qty" placeholder="QTY"></td></tr>
                 <tr><td><input class="form-control" type="text" name="keterangan" placeholder="Keterangan"></td></tr>
-                <tr><td><button type="button" class="btn btn-primary">POST</button></tr>
+                <tr><td><input class="form-control btn-primary col-sm-3" type="submit" name="addKebutuhan" value="Tambah"></td></tr>
               </table>
             </form>
           </div>
@@ -73,21 +73,21 @@
     <hr class="m-0">
   <!-- ======================================================================================================================-->
 
-    <!-- Membuat menu publikasi BPBD ==========================================================================================-->
+    <!-- Membuat menu laporan lokasi bencana ==============================================================================-->
   <div class="container-fluid p-0">
     <section class="resume-section" id="lokasi">
       <div class="my-auto">
         <h3 class="mb-0"><span class="text-primary">LAPORKAN LOKASI BENCANA</span></h3>
         <hr> 
         <p class="mb-3">Informasi lokasi bencana terbaru</p>
-            <form action="" id="">
+            <form action="<?php echo site_url('Petugas/insertLokasi') ?>" method="POST">
               <table>
-                <tr><td><input class="form-control" type="text" name="bencana" placeholder="Jenis Bencana"></td></tr>
+                <tr><td><input class="form-control" type="text" name="jenis" placeholder="Jenis Bencana"></td></tr>
                 <tr><td><input class="form-control" type="text" name="alamat" placeholder="Alamat"></td></tr>
-                <tr><td><input class="form-control" type="text" name="kab" placeholder="Kabupaten/Kota"></td></tr>
+                <tr><td><input class="form-control" type="text" name="kabupaten" placeholder="Kabupaten/Kota"></td></tr>
                 <tr><td><input class="form-control" type="text" name="provinsi" placeholder="Provinsi"></td></tr>
                 <tr><td><input class="form-control" type="text" name="keterangan" placeholder="Keterangan"></td></tr>
-                <tr><td><button type="button" class="btn btn-primary">POST</button></tr>
+                <tr><td><button type="submit" class="btn btn-primary">POST</button></tr>
               </table>
             </form>
           </div>
@@ -108,45 +108,43 @@
         <p class="mb-3">Daftar Logistik Masuk</p>
         <div class="col-md-12">         
         <table class="table table-bordered">
-          <thead>
+          <thead style="text-align: center;" >
             <tr>
               <th scope="col">id</th>
               <th scope="col">Donatur</th>
-              <th scope="col">Kontak</th>
               <th scope="col">Barang</th>
               <th scope="col">QTY</th>
               <th scope="col">Lokasi</th>
               <th scope="col">Keterangan</th>
-              <th scope="col">Pengiriman</th>
               <th scope="col">Validasi</th>
               </tr>
           </thead>
-          
           <tbody>
+            <?php 
+            $no = 1;
+            foreach($pengiriman as $p){ ?>
+            
             <tr>
-              <th scope="row">1</th>
-              <td>Indah</td>
-              <td>083746728323</td>
-              <td>Baju</td>
-              <td>10</td>
-              <td>Yogyakarta</td>
-              <td>Semoga bermanfaat, baju layak pakai</td>
-              <td>Belum di kirim</td>
+              <td style="text-align: center;" width="50px" scope="row"><?php echo $no++ ?></td>
+              <td><?php echo $p['donatur'] ?></td>
+              <td><?php echo $p['barang'] ?></td>
+              <td><?php echo $p['qty'] ?></td>
+              <td><?php echo $p['kepada_lokasi'] ?></td>
+              <td><?php echo $p['keterangan'] ?></td>
               <td>
-                <form action="/action_page.php">
+               <form action="<?php echo site_url('Petugas/editPengiriman/'.$p['id']) ?>" method="POST">
                 <div class="input-group md-5">
-                  <select class="custom-select" id="inputKategori">
-                    <option selected>Status...</option>
-                    <option value="sampai">Logistik di terima</option>
-                    <option value="belum">Logistik belum di terima</option>
-                  </select>
+                   <input class="form-control block" type="text" name="statusedit" placeholder="<?php echo $p['status'] ?>">
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Update</button>
+                    <button class="btn btn-outline-secondary" type="submit">Update</button>
                   </div>
                 </div>
               </form>
               </td>
             </tr>
+
+            <?php } ?>
+          
           </tbody>
         </table>
       </div>

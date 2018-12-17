@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 10 Des 2018 pada 15.39
+-- Waktu pembuatan: 17 Des 2018 pada 15.12
 -- Versi server: 10.1.36-MariaDB
 -- Versi PHP: 5.6.38
 
@@ -25,6 +25,75 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `kebutuhan`
+--
+
+CREATE TABLE `kebutuhan` (
+  `id` int(11) NOT NULL,
+  `lokasi` varchar(150) NOT NULL,
+  `kebutuhan` varchar(100) NOT NULL,
+  `qty` varchar(50) NOT NULL,
+  `keterangan` varchar(200) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `kebutuhan`
+--
+
+INSERT INTO `kebutuhan` (`id`, `lokasi`, `kebutuhan`, `qty`, `keterangan`, `status`) VALUES
+(1, 'Wates, Kulonprogo, Jogja', 'Mie, Bahan dapur, alat mandi', '50pcs', 'Untuk 50 orang', 'Dibuka'),
+(2, 'Palu, Sulawesi Tenggara', 'Makanan instan, Alat mandi', '100pcs', 'untuk 100 orang dewasa', 'Ditutup'),
+(3, 'Bima, NTB', 'Beras, air mineral, masker', '200pcs', 'kepada 40kk', 'Ditutup');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `id` int(11) NOT NULL,
+  `jenis` varchar(50) NOT NULL,
+  `alamat` varchar(200) NOT NULL,
+  `kabupaten` varchar(50) NOT NULL,
+  `provinsi` varchar(50) NOT NULL,
+  `keterangan` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `lokasi`
+--
+
+INSERT INTO `lokasi` (`id`, `jenis`, `alamat`, `kabupaten`, `provinsi`, `keterangan`) VALUES
+(1, 'Tsunami', 'Pesisir Pantai', 'Palu', 'Sulawesi tenggara', 'Disebabkan gempa, banyak rumah rusak dan korban jiwa');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pengiriman`
+--
+
+CREATE TABLE `pengiriman` (
+  `id` int(11) NOT NULL,
+  `donatur` varchar(100) NOT NULL,
+  `barang` varchar(300) NOT NULL,
+  `qty` varchar(50) NOT NULL,
+  `kepada_lokasi` varchar(100) NOT NULL,
+  `keterangan` varchar(300) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pengiriman`
+--
+
+INSERT INTO `pengiriman` (`id`, `donatur`, `barang`, `qty`, `kepada_lokasi`, `keterangan`, `status`) VALUES
+(1, 'Indah ilyas', 'mineral', '200pcs', 'Palu', 'untuk 100 orang dewasa', 'Belum diterima');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `prosedur`
 --
 
@@ -38,9 +107,8 @@ CREATE TABLE `prosedur` (
 --
 
 INSERT INTO `prosedur` (`id`, `prosedur`) VALUES
-(1, 'Pengiriman dapat dilakukan melalui TIKI/POS/JNE/J&T di daerah Anda.'),
-(3, 'Mengisi data pengiriman (Nama Pengirim/Alamat/Alamat/Bantuan/Qty)'),
-(5, 'Alamat pengiriman adalah alamat BPBD');
+(13, 'Alamat pengiriman adalah alamat BPBD'),
+(15, 'Mengisi data pengiriman (Nama Pengirim/Alamat/Bantuan/Qty)');
 
 -- --------------------------------------------------------
 
@@ -70,6 +138,24 @@ INSERT INTO `user` (`id`, `name`, `username`, `email`, `password`, `level`) VALU
 --
 
 --
+-- Indeks untuk tabel `kebutuhan`
+--
+ALTER TABLE `kebutuhan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `lokasi`
+--
+ALTER TABLE `lokasi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `pengiriman`
+--
+ALTER TABLE `pengiriman`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `prosedur`
 --
 ALTER TABLE `prosedur`
@@ -86,10 +172,28 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `kebutuhan`
+--
+ALTER TABLE `kebutuhan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `lokasi`
+--
+ALTER TABLE `lokasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `pengiriman`
+--
+ALTER TABLE `pengiriman`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `prosedur`
 --
 ALTER TABLE `prosedur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`

@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
   <link href="<?php echo base_url(); ?>/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <link href="<?php echo base_url(); ?>/assets/css/tampilan.css" rel="stylesheet">
+  <link href="<?php echo base_url(); ?>/assets/js/editprosedur.js">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <!-- ====================================================================================================================-->
 </head>
@@ -50,7 +51,22 @@
     <span class="logout"><a href="<?php echo site_url('Bpbd/logout')?>"><i class="fas fa-sign-out-alt"> </i> Logout</a></span>
   </nav>
   <!-- ======================================================================================================================-->
- 
+  
+  <!-- Membuat menu publikasi BPBD ==========================================================================================-->
+  <div class="container-fluid p-0">
+    <section class="resume-section" id="kebutuhan">
+      <div class="my-auto">
+        <h3 class="mb-0">
+          <span class="text-primary">SELAMAT DATANG</span>
+        </h3>
+        <hr>
+
+      </div>
+    </section>
+    <hr class="m-0">
+  <!-- ======================================================================================================================-->
+
+
   <!-- Membuat menu publikasi BPBD ==========================================================================================-->
   <div class="container-fluid p-0">
     <section class="resume-section" id="kebutuhan">
@@ -63,9 +79,9 @@
         <p class="mb-3">Data kebutuhan dari lokasi</p>
         <div class="col-md-12">  
         <table class="table table-bordered">
-          <thead>
+          <thead style="text-align: center;">
             <tr>
-              <th scope="col">id</th>
+              <th scope="col">no</th>
               <th scope="col">Lokasi</th>
               <th scope="col">Kebutuhan</th>
               <th scope="col">QTY</th>
@@ -75,27 +91,30 @@
           </thead>
           
           <tbody>
+            <?php 
+            $no = 1;
+            foreach($kebutuhan as $k){ ?>
+            
             <tr>
-              <th scope="row">1</th>
-              <td>Jogja</td>
-              <td>Baju</td>
-              <td>10pcs</td>
-              <td>Untuk anak kecil</td>
+              <td style="text-align: center;"width="50px" scope="row"><?php echo $no++ ?></td>
+              <td><?php echo $k['lokasi'] ?></td>
+              <td><?php echo $k['kebutuhan'] ?></td>
+              <td><?php echo $k['qty'] ?></td>
+              <td><?php echo $k['keterangan'] ?></td>
               <td>
-                <form action="/action_page.php">
+               <form action="<?php echo site_url('Bpbd/editStatus/'.$k['id']) ?>" method="POST">
                 <div class="input-group md-5">
-                  <select class="custom-select" id="inputKategori">
-                    <option selected>Choose...</option>
-                    <option value="open">Donasi di buka</option>
-                    <option value="close">Donasi di tutup</option>
-                  </select>
+                   <input class="form-control block" type="text" name="statusedit" placeholder="<?php echo $k['status'] ?>">
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Update</button>
+                    <button class="btn btn-outline-secondary" type="submit">Update</button>
                   </div>
                 </div>
               </form>
               </td>
             </tr>
+
+            <?php } ?>
+          
           </tbody>
         </table>
         </div>
@@ -114,8 +133,8 @@
 
         <p class="mb-3">Daftar Lokasi Bencana</p>
         <div class="col-md-12">            
-        <table class="table table-bordered">
-          <thead>
+        <table class="table table-bordered" >
+          <thead style="text-align: center;">
             <tr>
               <th scope="col">id</th>
               <th scope="col">Jenis</th>
@@ -123,23 +142,27 @@
               <th scope="col">Kabupaten/Kota</th>
               <th scope="col">Provinsi</th>
               <th scope="col">Keterangan</th>
-              <th scope="col"></th>
+              <th scope="col">Hapus</th>
               </tr>
           </thead>
           
           <tbody>
+            <?php 
+            $no = 1;
+            foreach($lokasi as $l){ ?>
+            
             <tr>
-              <th scope="row">1</th>
-              <td>Banjir</td>
-              <td>jl. Sudirman no.22</td>
-              <td>Surabaya</td>
-              <td>Jawa Timur</td>
-              <td>Lokasi banjir merupakan daerah perkotaan, banyak fasilitas rusak</td>
-              <td width="110px;">
-                <button class="btn btn-warning" type="button">&#10004</button>
-                <button class="btn btn-danger" type="button">&#10006</button>
-              </td>
+              <td style="text-align: center;" width="50px" scope="row"><?php echo $no++ ?></td>
+              <td><?php echo $l['jenis'] ?></td>
+              <td><?php echo $l['alamat'] ?></td>
+              <td><?php echo $l['kabupaten'] ?></td>
+              <td><?php echo $l['provinsi'] ?></td>
+              <td><?php echo $l['keterangan'] ?></td>
+              <td style="text-align: center;"><a role="button" class="btn btn-warning" href="<?php echo site_url('Petugas/deleteLokasi/'.$l['id']) ?>" onclick="return confirm('Anda ingin menghapus data?')">&#10006;</a></td>
             </tr>
+
+            <?php } ?>
+          
           </tbody>
         </table>
       </div>
@@ -156,40 +179,18 @@
         </h3>
         <hr>
 
-        <p class="mb-3">Pilih barang yang akan di kirimkan</p>
+        <p class="mb-3">Inputkan data barang donasi yang akan di kirimkan</p>
         <div class="col-md-12">         
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">id</th>
-              <th scope="col">Donatur</th>
-              <th scope="col">Kontak</th>
-              <th scope="col">Barang</th>
-              <th scope="col">QTY</th>
-              <th scope="col">Lokasi</th>
-              <th scope="col">Keterangan</th>
-              <th scope="col">Pengiriman</th>
-              <th scope="col">Validasi</th>
-
-              </tr>
-          </thead>
-          
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Indah</td>
-              <td>083746728323</td>
-              <td>Baju</td>
-              <td>10</td>
-              <td>Yogyakarta</td>
-              <td>Semoga bermanfaat, baju layak pakai</td>
-              <td>
-                <button class="btn btn-success btn-block" type="button">Kirim</button>
-              </td>
-              <td>sampai</td>
-            </tr>
-          </tbody>
-        </table>
+        <form action="<?php echo site_url('Bpbd/insertPengiriman') ?>" method="POST">
+              <table>
+                <tr><td><input class="form-control" type="text" name="donatur" placeholder="Nama Donatur"></td></tr>
+                <tr><td><input class="form-control" type="text" name="barang" placeholder="Barang"></td></tr>
+                <tr><td><input class="form-control" type="text" name="qty" placeholder="QTY"></td></tr>
+                <tr><td><input class="form-control" type="text" name="kepada_lokasi" placeholder="Kepada Lokasi"></td></tr>
+                <tr><td><input class="form-control" type="text" name="keterangan" placeholder="Keterangan"></td></tr>
+                <tr><td><input class="form-control btn-primary col-sm-3" type="submit" name="addPengiriman" value="Tambah"></td></tr>
+              </table>
+            </form>
       </div>
       </div>
     </section>
@@ -218,21 +219,41 @@
         <table class="table table-borderless">
           <tbody>
             <?php 
-            
+            $no = 1;
             foreach($hasilnya as $r){ ?>
             
             <tr>
-              <td width="50px" scope="row"><?php echo "&#10162"?></td>
+              <td width="50px" scope="row"><?php echo $no++?></td>
               <td><?php echo $r['prosedur'] ?></td>
-              <td> <a href="<?php echo site_url('Bpbd/editProsedur') ?>">&#9999</a>
-              <td> <a href="<?php echo site_url('Bpbd/deleteProsedur/'.$r['id']) ?>" onclick="return confirm('Anda ingin menghapus data?')">&#10006</a></td>
+              <td><a data-toggle="modal" data-target="#modalEdit" href="<?php echo site_url('Bpbd/editProsedur/'.$r['id']) ?>"> &#9999;</a></td>
+              
+              <!-- Modal edit-->
+              <div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="exampleModalLongTitle">EDIT PROSEDUR</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+
+                    <div class="modal-body">
+                      <form action="<?php echo site_url('Bpbd/editProsedur/'.$r['id']) ?>" method="POST">
+                        <input class="form-control block" type="text" name="ubahprosedur" placeholder="Masukan prosedur baru">
+                        <button class="btn btn-primary" type="submit" name="editProsedur">Simpan</button>
+                        <br><br><br>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <td><a href="<?php echo site_url('Bpbd/deleteProsedur/'.$r['id']) ?>" onclick="return confirm('Anda ingin menghapus data?')">&#10006;</a></td>
             </tr>
             <?php } ?>
-
           </tbody>
         </table>
-      </div>
-
       </div>
     </section>
   </div>

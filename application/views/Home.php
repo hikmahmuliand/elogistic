@@ -75,24 +75,31 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th scope="col">Id</th>
+              <th scope="col">no</th>
               <th scope="col">Lokasi</th>
               <th scope="col">Kebutuhan</th>
-              <th scope="col">Qty</th>
+              <th scope="col">QTY</th>
               <th scope="col">Keterangan</th>
               <th scope="col">Status</th>
               </tr>
           </thead>
           
           <tbody>
+            <?php 
+            $no = 1;
+            foreach($kebutuhan as $k){ ?>
+            
             <tr>
-              <th scope="row">1</th>
-              <td>Yogyakarta</td>
-              <td>Baju</td>
-              <td>10pcs</td>
-              <td>Untuk Anak Kecil</td>
-              <td>Donasi dibuka</td>
+              <td width="50px" scope="row"><?php echo $no++ ?></td>
+              <td><?php echo $k['lokasi'] ?></td>
+              <td><?php echo $k['kebutuhan'] ?></td>
+              <td><?php echo $k['qty'] ?></td>
+              <td><?php echo $k['keterangan'] ?></td>
+              <td><?php echo $k['status'] ?></td>
             </tr>
+
+            <?php } ?>
+          
           </tbody>
         </table>
         </div>
@@ -110,10 +117,10 @@
 
         <p class="mb-3">Daftar Lokasi Bencana</p>
         <div class="col-md-12">            
-        <table class="table table-bordered">
-          <thead>
+        <table class="table table-bordered" >
+          <thead style="text-align: center;">
             <tr>
-              <th scope="col">Id</th>
+              <th scope="col">id</th>
               <th scope="col">Jenis</th>
               <th scope="col">Alamat</th>
               <th scope="col">Kabupaten/Kota</th>
@@ -123,14 +130,21 @@
           </thead>
           
           <tbody>
+            <?php 
+            $no = 1;
+            foreach($lokasi as $l){ ?>
+            
             <tr>
-              <th scope="row">1</th>
-              <td>Banjir</td>
-              <td>Jl. Sudirman No.222</td>
-              <td>Surabaya</td>
-              <td>Jawa Timur</td>
-              <td>Lokasi banjir merupakan daerah perkotaan, banyak fasilitas rusak</td>
+              <td style="text-align: center;" width="50px" scope="row"><?php echo $no++ ?></td>
+              <td><?php echo $l['jenis'] ?></td>
+              <td><?php echo $l['alamat'] ?></td>
+              <td><?php echo $l['kabupaten'] ?></td>
+              <td><?php echo $l['provinsi'] ?></td>
+              <td><?php echo $l['keterangan'] ?></td>
             </tr>
+
+            <?php } ?>
+          
           </tbody>
         </table>
       </div>
